@@ -1,66 +1,84 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# File Store Service
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+This project is a file storage service implemented using Laravel for the backend, Vue3 (Composition API) for the frontend, and MySQL or PostgreSQL as the database.
 
-## About Laravel
+## Stack
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### Backend (Laravel)
+- Laravel framework is used to build the backend.
+  
+### Frontend
+- Vue3 (Composition API) is used for the frontend.
+  
+### Database
+- MySQL or PostgreSQL is used as the database.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Additional Tools
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Frontend Styling
+- You can choose any frontend styling tools such as Bootstrap, Material, Tailwind, etc.
 
-## Learning Laravel
+### Optional Tools (Choose one or more)
+1. **Inertia.js**
+2. **State Management and Routing**
+   - Vue: Vuex, Vue Router
+   - React: Redux, Redux Toolkit, React Router
+3. **HTTP Requests and Utilities**
+   - Axios, Lodash
+4. **CSS Preprocessors**
+   - SASS, SCSS, LESS
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Features to Implement
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### 1. List Page
+- Display a list of files in a tabular or block format.
+- Implement pagination with a limit of 50 records per page.
+- Display the following details for each file:
+   - User-entered or original filename.
+   - File size in megabytes.
+   - File extension.
+   - Cropped preview (100 x 100) for images.
+   - Download link for the original file.
+- Show the total number of records and the count on the current page.
+- Include links to edit and delete entries.
+- Deletion should be confirmed through a modal, removing both the database record and the file in the storage.
+- Implement file search by filenames, and maintain search parameters in the browser's query string.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 2. Create and Edit Page
+- Include an optional "File Name" input (type=text).
+- Implement a file upload field, required only for new uploads or updating existing files.
+- Stylish input[type=file] with drag-and-drop functionality.
+- Separate components for the name and file fields.
+- Buttons for "Save" and "Delete," with confirmation modals on click.
+- For file uploads, implement:
+   - Validation for a maximum file size of 8 megabytes.
+   - Progress bar showing the file upload status.
 
-## Laravel Sponsors
+## Getting Started
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+1. Clone the repository.
+2. Set up the Laravel environment, database, and migrations.
+3. Install frontend dependencies and build the frontend.
+4. Run the Laravel development server.
 
-### Premium Partners
+## Usage
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+- Access the application at `http://localhost`.
+- Use the list page to view, search, edit, and delete files.
+- Create and edit pages allow adding or updating files.
 
-## Contributing
+## Project Structure
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```
+/file_store_service
+|-- /backend                  # Laravel Backend
+|-- /frontend                 # Vue3 Frontend
+|-- /database                 # Database Migrations
+|-- /public                   # Public assets
+|-- /resources                # Laravel Resources
+|-- /tests                    # PHPUnit Tests
+|-- .env.example              # Sample .env file
+|-- README.md                 # Project Readme
+```
 
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Feel free to adjust the structure and instructions based on your preferences and requirements.
