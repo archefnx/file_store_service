@@ -97,7 +97,7 @@ class FilesController extends Controller
     {
         $file = Files::findOrFail($id);
 
-        Storage::delete('uploads/' . $file->id . '_' . $file->original_name);
+        Storage::delete('uploads/' . $file->original_name);
 
         $file->delete();
 
