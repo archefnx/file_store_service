@@ -31,4 +31,5 @@
 
         <button type="submit" class="btn btn-primary">Сохранить</button>
     </form>
+    <button><a href="{{ url('/') }}">Cancel</a></button>
 @endsection
