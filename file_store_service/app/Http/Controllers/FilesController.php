@@ -15,7 +15,10 @@ class FilesController extends Controller
         $search = $request->input('search');
 
         $files = Files::when($search, function ($query) use ($search) {
-            return $query->where('original_name', 'like', '%' . $search . '%');
+            return $query->where(function ($query) use ($search) {
+                $query->where('original_name', 'like', '%' . $search . '%')
+                         ->orWhere('name', 'like', '%' . $search . '%');
+            });
         })->paginate(50);
 
         return view('files.index', compact('files', 'search'));
@@ -29,7 +32,7 @@ class FilesController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'file' => 'required|file|max:8192|mimes:jpeg,png,pdf', // 8 MB
+            'file' => 'required|file|max:8192|mimes:jpeg,png,pdf,doc,docx', // 8 MB
             'name' => 'nullable|string',
         ]);
 
@@ -41,10 +44,9 @@ class FilesController extends Controller
             'original_name' => $originalName,
             'extension' => $file->getClientOriginalExtension(),
             'size' => $file->getSize(),
-            'path' => 'uploads/' . $originalName,
         ]);
 
-        $file->storeAs('uploads', $originalName);
+        $file->storeAs('public/uploads', $uploadedFile->id . '_' . $originalName);
 
         return redirect()->route('files.index')->with('success', 'File uploaded successfully.');
     }
@@ -61,13 +63,13 @@ class FilesController extends Controller
         $file = Files::findOrFail($id);
 
         $request->validate([
-            'file' => 'sometimes|file|max:8192|mimes:jpeg,png,pdf', // 8 MB
+            'file' => 'sometimes|file|max:8192|mimes:jpeg,png,pdf,doc,docx', // 8 MB
             'name' => 'nullable|string',
         ]);
 
         if ($file->exists() && $request->hasFile('file')) {
             try {
-                Storage::delete('uploads/' . $file->id . '_' . $file->original_name);
+                Storage::delete('public/uploads/' . $file->id . '_' . $file->original_name);
             } catch (\Exception $e) {
                 // Handle the exception (e.g., log or display an error message)
             }
@@ -80,10 +82,9 @@ class FilesController extends Controller
                 'original_name' => $originalName,
                 'extension' => $newFile->getClientOriginalExtension(),
                 'size' => $newFile->getSize(),
-                'path' => 'uploads/' . $originalName,
             ]);
 
-            $newFile->storeAs('uploads', $file->id . '_' . $originalName);
+            $newFile->storeAs('public/uploads', $file->id . '_' . $originalName);
         } elseif ($file->name != $request->input('name')) {
             $file->update([
                 'name' => $request->input('name'),
@@ -97,7 +98,7 @@ class FilesController extends Controller
     {
         $file = Files::findOrFail($id);
 
-        Storage::delete('uploads/' . $file->original_name);
+        Storage::delete('public/uploads/' . $file->id . '_' . $file->original_name);
 
         $file->delete();
 
@@ -112,16 +113,20 @@ class FilesController extends Controller
             abort(404); // File not found
         }
 
+        $filePath = 'public/uploads/' . $file->id . '_' . $file->original_name;
+
         // Ensure the file exists in the storage disk
-        if (Storage::exists($file->path)) {
-            $path = Storage::path($file->path);
+        if (Storage::exists($filePath)) {
+            $absolutePath = storage_path('app/' . $filePath); // Fix the variable name
+
             $headers = [
                 'Content-Type' => $file->mime_type,
             ];
 
-            return response()->download($path, $file->original_name, $headers);
+            return response()->download($absolutePath, $file->original_name, $headers);
         } else {
             abort(404); // File not found in storage
         }
     }
+
 }
