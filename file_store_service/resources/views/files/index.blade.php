@@ -18,10 +18,10 @@
     <table class="table">
         <thead>
             <tr>
-                <th>New name</th>
                 <th>Название</th>
                 <th>Размер (MB)</th>
                 <th>Расширение</th>
+                <th>Превью</th>
                 <th>Скачать</th>
                 <th>Редактировать</th>
                 <th>Удалить</th>
@@ -30,10 +30,16 @@
         <tbody>
             @foreach($files as $file)
                 <tr>
-                    <td>{{ $file->name ?? "Default name" }}</td>
-                    <td>{{ $file->original_name }}</td>
-                    <td>{{ $file->size }}</td>
+                    <td>{{ $file->name ?? $file->original_name }}</td>
+                    <td>{{ round($file->size / 1024 / 1024, 2) }}</td>
                     <td>{{ $file->extension }}</td>
+                    <td>
+                        @if (in_array($file->extension, ['jpg', 'jpeg', 'png', 'gif']))
+                            <img src="{{ asset('storage/uploads/' . $file->id . '_' . $file->original_name) }}" alt="{{ $file->original_name }}" style="width: 50px; height: 50px;">
+                        @else
+                            <img src="{{ asset('storage/default_file_image.png') }}" alt="file" style="width: 50px; height: 50px;">
+                        @endif
+                    </td>
                     <td><a href="{{ route('files.download', ['id' => $file->id]) }}" class="btn btn-primary">Скачать</a></td>
                     <td><a href="{{ route('files.edit', ['id' => $file->id]) }}" class="btn btn-warning">Редактировать</a></td>
                     <td>
