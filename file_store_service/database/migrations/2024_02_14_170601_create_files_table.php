@@ -11,12 +11,26 @@ return new class extends Migration
      */
     public function up(): void
     {
+        /**
+         * Create the 'files' table with necessary columns.
+         */
         Schema::create('files', function (Blueprint $table) {
+            // Unique identifier for each file
             $table->id();
+
+            // Optional name for the file
             $table->string('name')->nullable();
+
+            // Original name of the file
             $table->string('original_name');
+
+            // File extension (e.g., 'pdf', 'docx')
             $table->string('extension');
+
+            // File size in kilobytes (KB)
             $table->double('size');
+
+            // Timestamps for record creation and modification
             $table->timestamps();
         });
     }
@@ -26,6 +40,9 @@ return new class extends Migration
      */
     public function down(): void
     {
+        /**
+         * Drop the 'files' table if it exists.
+         */
         Schema::dropIfExists('files');
     }
 };
