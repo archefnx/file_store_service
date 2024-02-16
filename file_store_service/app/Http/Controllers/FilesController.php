@@ -32,7 +32,7 @@ class FilesController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'file' => 'required|file|max:8192|mimes:jpeg,png,pdf,doc,docx', // 8 MB
+            'file' => 'required|file|max:20480|mimes:jpeg,png,pdf,doc,docx', // 8 MB
             'name' => 'nullable|string',
         ]);
 
@@ -63,7 +63,7 @@ class FilesController extends Controller
         $file = Files::findOrFail($id);
 
         $request->validate([
-            'file' => 'sometimes|file|max:8192|mimes:jpeg,png,pdf,doc,docx', // 8 MB
+            'file' => 'sometimes|file|max:20480|mimes:jpeg,png,pdf,doc,docx', // 8 MB
             'name' => 'nullable|string',
         ]);
 
