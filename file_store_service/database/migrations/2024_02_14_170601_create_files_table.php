@@ -16,8 +16,7 @@ return new class extends Migration
             $table->string('name')->nullable();
             $table->string('original_name');
             $table->string('extension');
-            $table->float('size');
-            $table->string('path');
+            $table->double('size');
             $table->timestamps();
         });
     }
