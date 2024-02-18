@@ -64,7 +64,9 @@ Run database migrations to create tables:
 
 ```bash
 php artisan migrate
+php artisan storage:link
 ```
+
 
 ### 2.6. Build Frontend
 
