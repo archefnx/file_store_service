@@ -21,3 +21,5 @@ Route::get('/edit/{id}', [FilesController::class, 'edit'])->name('files.edit');
 Route::put('/update/{id}', [FilesController::class, 'update'])->name('files.update');
 Route::get('/delete/{id}', [FilesController::class, 'delete'])->name('files.delete');
 Route::get('/download/{id}', [FilesController::class, 'download'])->name('files.download');
+
+Route::get('/api/test', [FilesController::class, 'test'])->name('files.index');

@@ -115,6 +115,7 @@ class FilesController extends Controller
                 Storage::delete('public/uploads/' . $file->id . '_' . $file->original_name);
             } catch (\Exception $e) {
                 // Handle the exception (e.g., log or display an error message)
+                return redirect()->route('files.index')->with('error', 'Large file or wrong extension.');
             }
 
             // Extracting file details from the new file
@@ -171,6 +172,8 @@ class FilesController extends Controller
      */
     public function download($id)
     {
+        abort(404); // File not found
+
         // Finding the file record with the specified ID
         $file = Files::find($id);
 
