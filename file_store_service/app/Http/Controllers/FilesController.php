@@ -90,6 +90,10 @@ class FilesController extends Controller
         return view('files.edit', compact('file'));
     }
 
+    // public function test() {
+    //     // ваш код здесь
+    // }
+    
     /**
      * Update the specified file in storage.
      *
@@ -162,6 +166,7 @@ class FilesController extends Controller
 
         // Redirecting to the index view with a success message
         return redirect()->route('files.index')->with('success', 'File deleted successfully.');
+        // return response()->json(['message' => 'File deleted successfully'], 200);
     }
 
     /**
@@ -172,7 +177,7 @@ class FilesController extends Controller
      */
     public function download($id)
     {
-        abort(404); // File not found
+        return response()->json(['error' => 'Bad Request'], 400);
 
         // Finding the file record with the specified ID
         $file = Files::find($id);

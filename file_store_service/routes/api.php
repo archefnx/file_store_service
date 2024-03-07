@@ -22,4 +22,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 // Route::get('/file', [DeskController::class, 'index']) ;
 Route::get('/file', [DeskController::class, 'index']) ;
-Route::get('/download/{id}', [FilesController::class, 'download'])->name('files.download');
+Route::get('/download/{id}', [DeskController::class, 'download']);
+Route::get('/delete/{id}', [DeskController::class, 'delete']);
+Route::post('/upload', [DeskController::class, 'upload']);
+
